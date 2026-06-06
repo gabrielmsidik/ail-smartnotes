@@ -2,7 +2,7 @@ import uuid
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -17,7 +17,7 @@ from schemas import (
     ChatResponse,
     Source,
 )
-from rag import embed_note as rag_embed, query_notes, ask_llm
+from rag import embed_note as rag_embed, query_notes, ask_llm, delete_note_vectors
 from settings import settings
 
 logging.basicConfig(level=logging.INFO)
@@ -89,6 +89,23 @@ def chat(body: ChatRequest):
         "answer": answer,
         "sources": [Source(**s) for s in sources],
     }
+
+
+@app.delete("/notes/{note_id}", status_code=204)
+def delete_note(note_id: uuid.UUID, db: Session = Depends(get_db)):
+    note = db.query(Note).filter(Note.id == note_id).first()
+    if not note:
+        raise HTTPException(status_code=404, detail="Note not found")
+
+    if note.embedded:
+        try:
+            delete_note_vectors(str(note_id))
+        except Exception as exc:
+            logger.error("Failed to delete vectors for %s: %s", note_id, exc)
+
+    db.delete(note)
+    db.commit()
+    return Response(status_code=204)
 
 
 @app.get("/notes", response_model=list[NoteListItem])

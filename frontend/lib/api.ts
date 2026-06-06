@@ -68,3 +68,17 @@ export async function askQuestion(question: string): Promise<ChatResult> {
   });
   return handleResponse<ChatResult>(res);
 }
+
+export async function deleteNote(id: string): Promise<void> {
+  const res = await fetch(`${API_URL}/notes/${id}`, { method: "DELETE" });
+  if (!res.ok) {
+    let detail = `HTTP ${res.status}`;
+    try {
+      const body = await res.json();
+      detail = body.detail ?? detail;
+    } catch {
+      // use default detail
+    }
+    throw new Error(detail);
+  }
+}
