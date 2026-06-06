@@ -27,6 +27,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
+      <div className="bg-red-500 text-white text-center text-xs py-1">v2 — delete enabled</div>
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shrink-0">
