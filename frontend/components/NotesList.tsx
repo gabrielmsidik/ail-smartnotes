@@ -101,7 +101,7 @@ export default function NotesList({ notes, loading, onDeleted }: Props) {
                     onClick={() => handleDelete(note)}
                     disabled={deleting.has(note.id)}
                     title="Delete note"
-                    className="text-gray-300 hover:text-red-500 disabled:opacity-40 transition-colors"
+                    className="text-red-400 hover:text-red-600 disabled:opacity-40 transition-colors"
                   >
                     {deleting.has(note.id) ? (
                       <span className="inline-block w-4 h-4 border-2 border-red-300 border-t-transparent rounded-full animate-spin" />
