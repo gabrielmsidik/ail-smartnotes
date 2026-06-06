@@ -20,6 +20,8 @@ from schemas import (
 from rag import embed_note as rag_embed, query_notes, ask_llm, delete_note_vectors
 from settings import settings
 
+# test github actions pipeline
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
