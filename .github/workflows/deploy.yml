@@ -26,7 +26,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: muhdhayyun/smartnotes-ail-app-backend:latest
+          tags: gabrielmsidik/smartnotes-ail-app-sidikg-backend:latest
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -36,7 +36,7 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: smartnotes-ail-app-backend
+          service: smartnotes-ail-app-sidikg-backend
           region: us-central1
-          image: muhdhayyun/smartnotes-ail-app-backend:latest
+          image: gabrielmsidik/smartnotes-ail-app-sidikg-backend:latest
           
